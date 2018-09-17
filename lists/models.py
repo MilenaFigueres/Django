@@ -1,28 +1,40 @@
 from django.db import models
 from datetime import datetime
 
-class Personal_List(models.Model):
-    title = models.CharField(default='null',max_length=200)
-    date = models.DateTimeField(default=datetime.now(), blank=True)
-    description = models.TextField(null=True) #models.CharField(max_length=200)
-    #image = models.ImageField(upload_to='Dowmloads/')
-    order = models.IntegerField(default=0)
-    #priority = models.Foreignkey(Priority)
-    #state = models.Foreignkey(State)
-        
 
-'''class Priority(models.Model):
+class Priority(models.Model):
+    #priority_id = models.IntegerField(default=0, null=True, blank=True)
+    number_priority = models.IntegerField(default=0, null=True, blank=True)
+    description_priority = models.CharField(max_length=200, null=True)
 
-    def __init__(self):
-        number_priority = odels.IntegerField(default=0)
-        description_priority = models.CharField(max_length=200)
+    options = {1 : 'Urgent', 2 : 'High', 3 : 'Normal' }
+
+    def __str__(self):
+        return self.number_priority
+
 
 
 class State(models.Model):
+    number_state = models.IntegerField(default=0, null=True)
+    description_state = models.CharField(max_length=200, null=True)
 
-    def __init__(self):
-        number_state = odels.IntegerField(default=0)
-        description_state = models.CharField(max_length=200)'''
+    options = {1 : 'Pending', 2 : 'Done' }
+
+    def __str__(self):
+        return self.number_state
+
+
+class Personal_List(models.Model):
+    title = models.CharField(default='',max_length=200)
+    date = models.DateTimeField(default=datetime.now(), blank=True)
+    description = models.TextField(null=True) #models.CharField(max_length=200)
+    order = models.IntegerField(default=0)
+    priority = models.ForeignKey(Priority)
+    state = models.ForeignKey(State)
+
+    def __str__(self):
+        return self.title
+
 
 #create a list model
 #title
