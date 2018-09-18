@@ -3,26 +3,24 @@ from datetime import datetime
 
 
 class Priority(models.Model):
-    #priority_id = models.IntegerField(default=0, null=True, blank=True)
-    number_priority = models.IntegerField(default=0, null=True, blank=True)
+    PRIORITY = (
+        ('Urgent' , 'Urgent'), 
+        ('Hight' , 'Hight' ),
+        ('Normal' , 'Normal' ),
+    )
+    number_priority = models.CharField(max_length=3, choices=PRIORITY, default='3')
     description_priority = models.CharField(max_length=200, null=True)
-
-    options = {1 : 'Urgent', 2 : 'High', 3 : 'Normal' }
-
-    def __str__(self):
-        return self.number_priority
-
 
 
 class State(models.Model):
-    number_state = models.IntegerField(default=0, null=True)
+    STATE = (
+        ('Pending' , 'Pending'), 
+        ('Done' , 'Done' ),
+    )
+    number_state = models.CharField(max_length=3, choices=STATE, default='1')
     description_state = models.CharField(max_length=200, null=True)
 
-    options = {1 : 'Pending', 2 : 'Done' }
-
-    def __str__(self):
-        return self.number_state
-
+    
 
 class Personal_List(models.Model):
     title = models.CharField(default='',max_length=200)
@@ -31,10 +29,6 @@ class Personal_List(models.Model):
     order = models.IntegerField(default=0)
     priority = models.ForeignKey(Priority)
     state = models.ForeignKey(State)
-
-    def __str__(self):
-        return self.title
-
 
 #create a list model
 #title
